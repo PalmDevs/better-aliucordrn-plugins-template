@@ -1,0 +1,14 @@
+{
+    "extends": "@tsconfig/strictest",
+    "compilerOptions": {
+        "target": "ESNext",
+        "moduleResolution": "NodeNext",
+        "module": "ESNext",
+        "resolveJsonModule": true
+    },
+    "ts-node": {
+        "esm": true,
+        "swc": true,
+        "transpileOnly": true
+    }
+}
