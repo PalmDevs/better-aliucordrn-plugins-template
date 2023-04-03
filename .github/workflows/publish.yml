@@ -39,7 +39,7 @@ jobs:
               run: npm install -g ${{ matrix.package-manager }}
 
             - name: Install dependencies
-              run: rm -rf node_modules && ${{ matrix.package-manager }} run ci:${{ matrix.package-manager }}}
+              run: rm -rf node_modules && ${{ matrix.package-manager }} run ci:${{ matrix.package-manager }}
 
             - name: Build and release
               run: npm exec multi-semantic-release
