@@ -1,11 +1,17 @@
 {
+    "extends": "@tsconfig/strictest",
     "compilerOptions": {
-      "target": "ESNext",
-      "jsx": "react-native",
-      "strict": true,
-      "noImplicitAny": false,
-      "moduleResolution": "node",
-      "module": "ESNext"
+        "target": "ESNext",
+        "jsx": "react-native",
+        "moduleResolution": "node",
+        "module": "ESNext",
+        "importHelpers": true
+    },
+    "exclude": ["dist/", "node_modules/"],
+    "include": ["plugins/", "rollup.config.ts"],
+    "ts-node": {
+        "esm": true,
+        "swc": true,
+        "transpileOnly": true
     }
-  }
-  
+}

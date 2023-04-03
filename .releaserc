@@ -1,0 +1,76 @@
+{
+  "branches": [
+    "main",
+    {
+      "name": "dev",
+      "prerelease": true
+    }
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "presetConfig": {
+          "types": [
+            {
+              "type": "chore",
+              "section": "Other Changes",
+              "hidden": false
+            },
+            {
+              "type": "refactor",
+              "section": "Code Improvements",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    ],
+    "@semantic-release/changelog",
+    [
+      "semantic-release-aliucordrn-plugin",
+      {
+        "manifestFile": "manifest.json"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "plugin=$(basename $(dirname $(pwd))) cd ../.. && npm run build $plugin"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md",
+          "manifest.json"
+        ]
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "dist/*"
+          }
+        ],
+        "successComment": false
+      }
+    ],
+    [
+      "@saithodev/semantic-release-backmerge",
+      {
+        "backmergeBranches": [
+          {
+            "from": "main",
+            "to": "dev"
+          }
+        ],
+        "clearWorkspace": true
+      }
+    ]
+  ]
+}
