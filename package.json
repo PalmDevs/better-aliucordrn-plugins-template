@@ -1,5 +1,5 @@
 {
-  "name": "better-aliucordrn-plugins-template",
+  "name": "better-aliucordrn-plugin-template",
   "version": "1.0.0",
   "description": "An improved version of the AliucordRN plugin template that offers more features.",
   "author": "PalmDevs",
@@ -49,5 +49,16 @@
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
     "typescript": "^5.0.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PalmDevs/better-aliucordrn-plugin-template.git"
+  },
+  "keywords": [
+    "aliucord"
+  ],
+  "bugs": {
+    "url": "https://github.com/PalmDevs/better-aliucordrn-plugin-template/issues"
+  },
+  "homepage": "https://github.com/PalmDevs/better-aliucordrn-plugin-template#readme"
 }
