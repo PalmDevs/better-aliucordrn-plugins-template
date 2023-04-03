@@ -1,0 +1,68 @@
+name: Publish
+
+on:
+    push:
+        branches:
+            - main
+            - dev
+    pull_request:
+        branches:
+            - main
+            - dev
+    workflow_dispatch:
+
+jobs:
+    publish:
+        strategy:
+            matrix:
+                # 🛑 set your preferred package manager here
+                package-manager: [npm]
+                # 🛑 set your preferred node version here
+                node-version: [18.x]
+
+        name: Publish
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
+
+            - name: Setup Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3.6.0
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Install ${{ matrix.package-manager }}
+              run: npm install -g ${{ matrix.package-manager }}
+
+            - name: Install dependencies
+              run: rm -rf node_modules && ${{ matrix.package-manager }} run ci:${{ matrix.package-manager }}}
+
+            - name: Build and release
+              run: npm exec multi-semantic-release
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: dist
+                  path: dist/*.{zip,json}
+
+            - name: Checkout builds
+              uses: actions/checkout@master
+              with:
+                  ref: 'builds'
+                  path: 'builds'
+
+            - name: Push builds
+              run: |
+                  rm $GITHUB_WORKSPACE/builds/* || true # clean previous builds
+                  cp dist/*.{zip,json} $GITHUB_WORKSPACE/builds
+                  cd $GITHUB_WORKSPACE/builds
+                  git config --local user.email "actions@github.com"
+                  git config --local user.name "GitHub Actions"
+                  git add .
+                  git commit -m "Build $GITHUB_SHA" || exit 0   # do not error if nothing to commit
+                  git push

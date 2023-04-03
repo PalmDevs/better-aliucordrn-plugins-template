@@ -1,0 +1,43 @@
+name: Build Test
+
+on:
+    workflow_dispatch:
+
+jobs:
+    build:
+        strategy:
+            matrix:
+                package-manager: [npm, yarn, pnpm]
+                node-version: [18.x, 19.x]
+
+        name: Build plugins
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
+
+            - name: Setup Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v2
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Install ${{ matrix.package-manager }}
+              run: sudo npm install -g ${{ matrix.package-manager }}
+
+            - name: Install dependencies
+              run: rm -rf node_modules && ${{ matrix.package-manager }} run ci:${{ matrix.package-manager }}
+
+            - name: Build plugins
+              run: |
+                  mkdir dist
+                  ${{ matrix.package-manager }} run build:all
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: dist
+                  path: dist/*.{zip,json}
