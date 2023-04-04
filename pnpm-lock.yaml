@@ -17,8 +17,8 @@ devDependencies:
     specifier: ^11.0.0
     version: 11.0.0(rollup@3.20.2)(tslib@2.5.0)(typescript@5.0.3)
   '@saithodev/semantic-release-backmerge':
-    specifier: ^3.1.0
-    version: 3.1.0
+    specifier: ^2.2.0
+    version: 2.2.0
   '@semantic-release/changelog':
     specifier: ^6.0.3
     version: 6.0.3(semantic-release@21.0.1)
@@ -68,8 +68,8 @@ devDependencies:
     specifier: ^21.0.1
     version: 21.0.1
   semantic-release-aliucordrn-plugin:
-    specifier: ^1.0.1
-    version: 1.0.1
+    specifier: ^1.0.2
+    version: 1.0.2
   ts-node:
     specifier: ^10.9.1
     version: 10.9.1(@swc/core@1.2.189)(@types/node@18.15.11)(typescript@5.0.3)
@@ -365,7 +365,7 @@ packages:
     hasBin: true
     dependencies:
       '@manypkg/get-packages': 1.1.3
-      '@semrel-extra/topo': 1.9.0
+      '@semrel-extra/topo': 1.9.2
       blork: 9.3.0
       cosmiconfig: 7.1.0
       debug: 4.3.4
@@ -431,15 +431,15 @@ packages:
       rollup: 3.20.2
     dev: true
 
-  /@saithodev/semantic-release-backmerge@3.1.0:
-    resolution: {integrity: sha512-92AN5eI8svpxeUD6cw2JjCrHHZVlWIxQ67SiSSwoI1UP4N5QohCOf9O/W3OUApxKg3C8Y0RpGt7TUpGEwGhXhw==}
+  /@saithodev/semantic-release-backmerge@2.2.0:
+    resolution: {integrity: sha512-ZPqFNtF84Y9GhoiWZnd59+Sg/PS7/KYfpwGC76xnZiZqieEhF5lcKkkYbee/riDPTxNhz2PXK20qs9duYDh+ig==}
     dependencies:
       '@semantic-release/error': 3.0.0
       aggregate-error: 3.1.0
       debug: 4.3.4
       execa: 5.1.1
       lodash: 4.17.21
-      semantic-release: 21.0.1
+      semantic-release: 19.0.5
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -677,8 +677,8 @@ packages:
       - supports-color
     dev: true
 
-  /@semrel-extra/topo@1.9.0:
-    resolution: {integrity: sha512-R4jwDTWPaODKuDJfUws6wCN3jNmKgGro0q0XfitoSIeCpib7QmC2mP2MDIL5+PdrJtbPPnZQw0ccQJre5InWfg==}
+  /@semrel-extra/topo@1.9.2:
+    resolution: {integrity: sha512-Jr8i4lg6WncQ0sTdH31UkyYBYi2yLFn/GfL0Fsjdh16FZuiQfGHr7kBbQ230DScbURO96e/+LYMePH9eXU/+Cg==}
     dependencies:
       fast-glob: 3.2.12
       toposource: 1.1.3
@@ -1716,7 +1716,7 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       fs.realpath: 1.0.0
-      minimatch: 8.0.2
+      minimatch: 8.0.3
       minipass: 4.2.5
       path-scurry: 1.6.3
     dev: true
@@ -2329,8 +2329,8 @@ packages:
       brace-expansion: 1.1.11
     dev: true
 
-  /minimatch@8.0.2:
-    resolution: {integrity: sha512-ikHGF67ODxj7vS5NKU2wvTsFLbExee+KXVCnBWh8Cg2hVJfBMQIrlo50qru/09E0EifjnU8dZhJ/iHhyXJM6Mw==}
+  /minimatch@8.0.3:
+    resolution: {integrity: sha512-tEEvU9TkZgnFDCtpnrEYnPsjT7iUx42aXfs4bzmQ5sMA09/6hZY0jeZcGkXyDagiBOvkUjNo8Viom+Me6+2x7g==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       brace-expansion: 2.0.1
@@ -3101,8 +3101,8 @@ packages:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
     dev: true
 
-  /semantic-release-aliucordrn-plugin@1.0.1:
-    resolution: {integrity: sha512-HdUVYedrBik+wiBbPBASBT7M+pktwwJnLt2MUxnjmjx1JHdRRFET7vkmi5O4emoc8txtm8PNG/iWMbkF3jFLtA==}
+  /semantic-release-aliucordrn-plugin@1.0.2:
+    resolution: {integrity: sha512-gA+ro8bILR7hQlGXJV6ahejlpmm9X7vIiXC3dJtyF1WaM7ivzcAnJh2a/d0P8iW76Tq4cpbnxd+JAyE8hq2L3g==}
     dependencies:
       semantic-release: 21.0.1
     transitivePeerDependencies:
