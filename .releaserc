@@ -37,7 +37,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "plugin=$(basename $(dirname $(pwd))) cd ../.. && npm run build $plugin"
+        "prepareCmd": "cd ../..; npm run build $(basename $(pwd))"
       }
     ],
     [
