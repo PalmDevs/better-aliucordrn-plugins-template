@@ -10,12 +10,18 @@ By integrating existing tools into your development process, you can significant
 Paired with the new CLI, which provides a better way to manage your development environment. It makes for an easier way for you to produce high-quality code that is error-free and consistently formatted.
 
   - 🤖 **Better workflow**  
-Forgot to bump versions? No need to worry! Workflows will do this automatically for you. The version bumping follows the [Semantic Versioning specifications](https://semver.org), you'll need to be following the [Conventional Commits specifications](https://www.conventionalcommits.org) to use this feature. Don't want to follow it? Learn how to disable it [here](#-semantic-release).
+Forgot to bump versions? No need to worry! Workflows will do this automatically for you. The version bumping follows the [Semantic Versioning specifications](https://semver.org), you'll need to be following the [Conventional Commits specifications](https://www.conventionalcommits.org) to use this feature. Don't want to follow that? Learn how to disable it [here](#-semantic-release).
 
 ## 🛑 Requirements
   - Node.js 18 or 19
   - One of these package managers: **NPM**, **Yarn**, or **PNPM**  
 *If you want more to be supported, please open an issue.*
+
+## 👀 Differences
+  - To make this project compatible with semantic-release, I had to rename the **manifest.json** files inside the plugins' directory to be **package.json**. This means that you'll need to change the `name` field to be unique as well. I may make the CLI check for this later.
+  - All plugins will need to be in the [**plugins**](./plugins/) directory, otherwise they'll not be recognized.
+  - The **baseManifest.json** file has been renamed to [**manifest.json**](./manifest.json).
+  - and probably more..?
 
 ## ⚒️ Setting up
   - Install the dependencies
