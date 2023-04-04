@@ -88,7 +88,7 @@ export default function Build(program: typeof Program, context: CLIContext) {
                                 ` - Check if the plugin is missing the ${chalk.yellow(
                                     'index.ts'
                                 )} or the ${chalk.yellow(
-                                    'manifest.json'
+                                    'package.json'
                                 )} file\n` +
                                 ` - Force the build process by using the ${chalk.redBright(
                                     '--force'

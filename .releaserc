@@ -31,7 +31,7 @@
     [
       "semantic-release-aliucordrn-plugin",
       {
-        "manifestFile": "manifest.json"
+        "manifestFile": "package.json"
       }
     ],
     [
@@ -63,7 +63,7 @@
     [
       "@saithodev/semantic-release-backmerge",
       {
-        "backmergeBranches": [
+        "branches": [
           {
             "from": "main",
             "to": "dev"

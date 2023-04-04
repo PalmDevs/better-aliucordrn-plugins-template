@@ -54,10 +54,10 @@ const plugins = readdirSync('./plugins')
     .map(plugin => {
         const nodes = readdirSync(`./plugins/${plugin}`);
         const available =
-            nodes.includes('manifest.json') &&
+            nodes.includes('package.json') &&
             nodes.includes('index.ts') &&
             lstatSync(`./plugins/${plugin}/index.ts`).isFile() &&
-            lstatSync(`./plugins/${plugin}/manifest.json`).isFile();
+            lstatSync(`./plugins/${plugin}/package.json`).isFile();
 
         logger.debug(
             `Plugin ${plugin} is loaded, it is ${
@@ -70,7 +70,7 @@ const plugins = readdirSync('./plugins')
                 `The plugin ${chalk.yellow(
                     plugin
                 )} is invalid. It may be missing the ${chalk.yellow(
-                    'manifest.json'
+                    'package.json'
                 )} file or the ${chalk.cyan('index.ts')} file.\n`
             );
 
