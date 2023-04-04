@@ -59,6 +59,19 @@ const plugins = readdirSync('./plugins')
             lstatSync(`./plugins/${plugin}/index.ts`).isFile() &&
             lstatSync(`./plugins/${plugin}/package.json`).isFile();
 
+        !nodes.includes('CHANGELOG.md') &&
+            logger.warn(
+                `The plugin ${chalk.yellow(
+                    plugin
+                )} does not have a CHANGELOG.md file. It is recommended to have this file.`
+            );
+        !nodes.includes('README.md') &&
+            logger.warn(
+                `The plugin ${chalk.yellow(
+                    plugin
+                )} does not have a README.md file. It is recommended to have this file.`
+            );
+
         logger.debug(
             `Plugin ${plugin} is loaded, it is ${
                 available ? 'available' : 'not available'
