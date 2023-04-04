@@ -44,7 +44,7 @@ jobs:
             - name: Build and release
               run: npm exec multi-semantic-release
               env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v3
