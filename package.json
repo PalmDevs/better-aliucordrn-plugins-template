@@ -9,25 +9,32 @@
   "workspaces": [
     "plugins/*"
   ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "engineStrict": true,
   "scripts": {
     "postinstall": "husky install; npm run cli -- --remove-pm-junk",
     "build": "npm run cli -- build",
     "build:all": "npm run cli -- build --all",
     "format": "prettier --write .",
     "cli": "node --no-warnings=ExperimentalWarning --loader=ts-node/esm .cli/index.ts",
-    "cli:debug": "CLI_DEBUG=1 npm run cli",
+    "cli:debug": "CLI_DEBUG=1 npm run cli --",
     "help": "npm run cli -- help",
     "watch": "npm run cli -- build --watch",
-    "ci:npm": "npm ci --prefer-offline --no-audit",
-    "ci:yarn": "yarn install --immutable --immutable-cache",
-    "ci:pnpm": "pnpm install --frozen-lockfile"
+    "update-lf:npm": "npm install --package-lock-only",
+    "update-lf:yarn": "yarn install --mode update-lockfile",
+    "update-lf:pnpm": "pnpm install --lockfile-only",
+    "ci-install:npm": "npm ci --prefer-offline --no-audit",
+    "ci-install:yarn": "yarn install --immutable --immutable-cache",
+    "ci-install:pnpm": "pnpm install --frozen-lockfile"
   },
   "devDependencies": {
     "@aliucord/hermesc": "^0.70.6-aliucord-2",
     "@aliucord/rollup-plugin": "^1.0.4",
     "@commander-js/extra-typings": "^10.0.3",
     "@qiwi/multi-semantic-release": "^6.5.1",
-    "@rollup/plugin-typescript": "^11.0.0",
+    "@rollup/plugin-typescript": "^11.1.0",
     "@saithodev/semantic-release-backmerge": "^2.2.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/exec": "^6.0.3",

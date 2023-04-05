@@ -31,13 +31,13 @@
     [
       "semantic-release-aliucordrn-plugin",
       {
-        "manifestFile": "package.json"
+        "manifestFile": "manifest.json"
       }
     ],
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "plugin=\"$(basename $(pwd))\"; cd ../..; npm run build $plugin"
+        "prepareCmd": "rm -f package.json; plugin=\"$(basename $(pwd))\"; cd ../..; npm run build $plugin"
       }
     ],
     [
@@ -54,7 +54,7 @@
       {
         "assets": [
           {
-            "path": "dist/*"
+            "path": "../../dist/*"
           }
         ],
         "successComment": false

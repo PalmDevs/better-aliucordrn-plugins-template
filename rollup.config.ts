@@ -22,7 +22,7 @@ export default defineConfig({
         }),
         makeManifest({
             baseManifest: 'manifest.json',
-            manifest: `${pluginDir}/package.json`,
+            manifest: `${pluginDir}/manifest.json`,
         }),
         makePluginZip(),
     ],

@@ -14,12 +14,11 @@ Forgot to bump versions? No need to worry! Workflows will do this automatically 
 
 ## 🛑 Requirements
   - Node.js 18 or 19
-  - One of these package managers: **NPM**, **Yarn**, or **PNPM**  
-*If you want more to be supported, please open an issue.*
+  - One of these package managers: [**NPM**](https://npmjs.com/package/npm), [**Yarn**](https://npmjs.com/package/yarn), or [**PNPM**](https://npmjs.com/package/pnpm)  
+*If you want more to be supported, please open an issue [here](https://github.com/PalmDevs/better-aliucordrn-plugin-template).*
 
 ## 👀 Differences
-  - To make this project compatible with semantic-release, I had to rename the **manifest.json** files inside the plugins' directory to be **package.json**. This means that you'll need to change the `name` field to be unique as well. I may make the CLI check for this later.
-  - All plugins will need to be in the [**plugins**](./plugins/) directory, otherwise they'll not be recognized.
+  - All plugins must be in the [**plugins**](./plugins/) directory, otherwise they'll not be recognized.
   - The **baseManifest.json** file has been renamed to [**manifest.json**](./manifest.json).
   - and probably more..?
 
@@ -32,9 +31,9 @@ yarn install
 # or if you use pnpm
 pnpm install
 ```
-This usually takes a bit of time. Please be patient as this package includes a lot of dependencies. If you know what you're doing, you can modify the [**package.json**](./package.json) file to remove some of the dependencies.
+This usually takes a bit of time. Please be patient as this template includes a lot of dependencies. If you know what you're doing, you can modify the [**package.json**](./package.json) file to remove some of the dependencies.
 
-  - Checkout the template
+  - Check out the template!
   - Build the example plugin and test
 ```sh
 npm run build ExamplePlugin
@@ -43,7 +42,7 @@ npm run build ExamplePlugin
 If you encounter any issues, please consider opening an issue in this GitHub repository.
 
 ### 👤 Setting up your package manager
-The only thing you'll need to do is modify the preferred package manager in the [**.github/workflows/publish.yml**](./.github/workflows/publish.yml) workflow file. Other things are automatically managed by the CLI!
+The only thing you'll need to do is modify the preferred package manager in the [**.github/workflows/publish.yml**](./.github/workflows/publish.yml) workflow file. Other things are automatically managed by the CLI when you install the dependencies in the first step.
 
 ### 😁 Optional changes
   - Edit the `license` field in the **manifest.json** file to include your preferred license.  
@@ -94,7 +93,7 @@ npm run cli -- build --all
 ## 🚫 Disabling functionalities
 
 ### 🤖 Semantic Release
-If you don't want the workflows to automatically bump versions for you for any reasons, you can remove the **Release** step in the **[publish.yml](./.github/workflows/publish.yml)** workflow. After that, you may want to delete the configurations, which are **.multi-releaserc** and **.releaserc**.  
+If you don't want the workflows to automatically bump versions for you for any reasons, you can remove the **Build and release** step in the **[publish.yml](./.github/workflows/publish.yml)** workflow. After that, you may want to delete the configurations, which are **.multi-releaserc** and **.releaserc**.  
 
 If you wish, you can also uninstall the semantic-release packages as well, there's a CLI command to do that.
 ```sh
@@ -118,23 +117,21 @@ yarn exec husky uninstall
 # or if you use pnpm
 pnpm exec husky uninstall
 ```
-  - Modify the prepare script in **[package.json](./package.json)** to no longer use Husky
+  - Modify the **postinstall** script in **[package.json](./package.json)** to no longer install the hooks
 ```diff
-- "prepare": "NODE_NO_WARNINGS=1 ts-node-esm .cli/index.ts -- --remove-pm-junk; husky install"
-+ "prepare": "NODE_NO_WARNINGS=1 ts-node-esm .cli/index.ts -- --remove-pm-junk"
+- "postinstall": "NODE_NO_WARNINGS=1 ts-node-esm .cli/index.ts -- --remove-pm-junk; husky install"
++ "postinstall": "NODE_NO_WARNINGS=1 ts-node-esm .cli/index.ts -- --remove-pm-junk"
 ```
 
 #### 🙅‍♂️ Commit with the `--no-verify` flag
 Do this only if you'll be disabling it temporarily.
 ```sh
 git commit -m 'this is a commit message' --no-verify
-# or short
-git commit -m 'this is a commit message' -n
 ```
 
 #### 🗑️ Uninstall everything altogether
 Permanent solution, no more wasted space.
-  - [**Follow the first method**](#unregister-the-hooks-via-husky)
+  - [**Follow the first method**](#-unregister-the-hooks-via-husky)
   - Then you need to uninstall the packages
 ```sh
 npm uninstall husky lint-staged
@@ -148,7 +145,7 @@ pnpm uninstall husky lint-staged
 ```sh
 # windows
 del /f /s /q .husky .lintstagedrc
-# macos or linux
+# unix-based operating systems
 rm -rf .husky .lintstagedrc
 ```
 

@@ -1,7 +1,7 @@
 import { Command, Option } from '@commander-js/extra-typings';
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import { lstatSync, readdirSync } from 'fs';
+import { lstatSync, readdirSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import SemanticReleasePackages from './constants/SemanticReleasePackages.js';
@@ -15,6 +15,7 @@ import {
 import logger from './util/logger.js';
 import pkg from '../package.json' assert { type: 'json' };
 import type CLIContext from './types/CLIContext.js';
+import pascalCaseToKebabCase from './util/pascalCaseToKebabCase.js';
 
 if (dirname(process.cwd()) === dirname(fileURLToPath(import.meta.url))) {
     logger.error(
@@ -49,51 +50,61 @@ logger.debug(
     `Package manager is ${context.packageManager} (default: "${defaultPackageManager}", user agent: "${npmUserAgent}")`
 );
 
-const plugins = readdirSync('./plugins')
-    .filter(plugin => lstatSync(`./plugins/${plugin}`).isDirectory())
-    .map(plugin => {
-        const nodes = readdirSync(`./plugins/${plugin}`);
-        const available =
-            nodes.includes('package.json') &&
-            nodes.includes('index.ts') &&
-            lstatSync(`./plugins/${plugin}/index.ts`).isFile() &&
-            lstatSync(`./plugins/${plugin}/package.json`).isFile();
+// Load plugins
 
-        !nodes.includes('CHANGELOG.md') &&
-            logger.warn(
-                `The plugin ${chalk.yellow(
-                    plugin
-                )} does not have a CHANGELOG.md file. It is recommended to have this file.`
-            );
-        !nodes.includes('README.md') &&
-            logger.warn(
-                `The plugin ${chalk.yellow(
-                    plugin
-                )} does not have a README.md file. It is recommended to have this file.`
+const packageNamePlugins = new Map<string, string[]>();
+const plugins = await Promise.all(
+    readdirSync('./plugins')
+        .filter(plugin => lstatSync(`./plugins/${plugin}`).isDirectory())
+        .sort((a, b) => a.localeCompare(b))
+        .map(async plugin => {
+            const nodes = readdirSync(`./plugins/${plugin}`);
+            const isAvailable =
+                nodes.includes('manifest.json') &&
+                nodes.includes('index.ts') &&
+                lstatSync(`./plugins/${plugin}/index.ts`).isFile() &&
+                lstatSync(`./plugins/${plugin}/manifest.json`).isFile();
+
+            logger.debug(
+                `Plugin ${plugin} is loaded, it is ${
+                    isAvailable ? 'available' : 'not available'
+                }`
             );
 
-        logger.debug(
-            `Plugin ${plugin} is loaded, it is ${
-                available ? 'available' : 'not available'
-            }`
-        );
+            !nodes.includes('CHANGELOG.md') &&
+                logger.warn(
+                    `The plugin ${chalk.yellow(
+                        plugin
+                    )} does not have a CHANGELOG.md file. It is recommended to have this file.`
+                );
 
-        if (!available)
-            logger.warn(
-                `The plugin ${chalk.yellow(
-                    plugin
-                )} is invalid. It may be missing the ${chalk.yellow(
-                    'package.json'
-                )} file or the ${chalk.cyan('index.ts')} file.\n`
-            );
+            !nodes.includes('README.md') &&
+                logger.warn(
+                    `The plugin ${chalk.yellow(
+                        plugin
+                    )} does not have a README.md file. It is recommended to have this file.`
+                );
 
-        return {
-            name: plugin,
-            available,
-        };
-    });
+            if (!isAvailable)
+                logger.warn(
+                    `The plugin ${chalk.yellow(
+                        plugin
+                    )} is invalid. It may be missing the ${chalk.yellow(
+                        'manifest.json'
+                    )} file or the ${chalk.cyan('index.ts')} file.`
+                );
+
+            return {
+                name: plugin,
+                available: isAvailable,
+            };
+        })
+);
+
+logger.newLine();
 
 context.plugins = plugins;
+
 logger.debug(`Successfully loaded ${context.plugins.length} plugin(s)`);
 
 // Setup CLI
@@ -105,14 +116,36 @@ const program = new Command('aliuplugrn-cli')
 const handleHelp = createHelpHandler(program, context);
 
 program
-    .option('--remove-semrel-packages', 'Remove semantic-release packages')
+    .addOption(
+        new Option(
+            '--remove-semrel-packages',
+            'Remove semantic-release packages'
+        )
+            .hideHelp()
+            .conflicts('--remove-pm-junk')
+            .conflicts('--create-imaginary-package-json')
+    )
     .addOption(
         new Option('--remove-pm-junk', 'Remove package manager junk files')
             .hideHelp()
             .conflicts('--remove-semrel-packages')
+            .conflicts('--create-imaginary-package-json')
+    )
+    .addOption(
+        new Option(
+            '--create-imaginary-package-json',
+            'Creates imaginary JSON file for the CI to function properly'
+        )
+            .hideHelp()
+            .conflicts('--remove-pm-junk')
+            .conflicts('--remove-semrel-packages')
     )
     .action(options => {
-        const { removePmJunk, removeSemrelPackages } = options;
+        const {
+            removePmJunk,
+            removeSemrelPackages,
+            createImaginaryPackageJson,
+        } = options;
 
         logger.debug(
             'Options passed\n' +
@@ -159,14 +192,14 @@ program
                 'error',
                 err => (
                     logger.error(
-                        `Cannot spawn command to uninstall semantic-release packages`
+                        `Cannot spawn process to uninstall semantic-release packages`
                     ),
                     logger.debug(err.toString()),
                     process.exit(1)
                 )
             );
             proc.once('exit', code => {
-                logger.newLine();
+                logger.newLine('error');
 
                 if (code === null) {
                     logger.error(
@@ -191,8 +224,50 @@ program
             process.exit(0);
         }
 
+        if (createImaginaryPackageJson) {
+            logger.info('Creating imaginary package.json file for plugins...');
+
+            logger.newLine('info');
+
+            const availablePlugins = plugins.filter(plugin => plugin.available);
+            if (!availablePlugins.length)
+                logger.error('No plugins available'), process.exit(1);
+
+            for (const plugin of availablePlugins) {
+                logger.info(
+                    `Creating imaginary package.json for plugin ${chalk.yellow(
+                        plugin.name
+                    )}...`
+                );
+
+                writeFileSync(
+                    `./plugins/${plugin.name}/package.json`,
+                    JSON.stringify({
+                        name: pascalCaseToKebabCase(plugin.name),
+                    })
+                );
+            }
+
+            process.exit(0);
+        }
+
         logger.debug('No options or commands passed, going to help page');
         if (!removePmJunk && !removeSemrelPackages) handleHelp();
+
+        // Tell users for duplicate package names plugins, this comes after because it needs to be noticed
+        Array.from(packageNamePlugins)
+            .filter(([_, plugins]) => plugins.length > 1)
+            .forEach(([packageName, plugins]) => {
+                logger.newLine('error');
+                logger.error(
+                    `The package name ${chalk.yellow(
+                        packageName
+                    )} is used by multiple plugins. One or more of following plugins need to be modified:\n` +
+                        plugins
+                            .map(plugin => chalk.yellow(` - ${plugin}`))
+                            .join('\n')
+                );
+            });
     });
 
 program
