@@ -251,7 +251,7 @@ program
         }
 
         logger.debug('No options or commands passed, going to help page');
-        if (!removePmJunk && !removeSemrelPackages) handleHelp();
+        handleHelp();
     });
 
 program
