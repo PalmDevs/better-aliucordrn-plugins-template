@@ -90,7 +90,6 @@ export default function Build(program: typeof Program, context: CLIContext) {
                                 )} or the ${chalk.yellow(
                                     'manifest.json'
                                 )} file\n` +
-                                ` - Check if the plugin has a unique package name\n` +
                                 ` - Force the build process by using the ${chalk.redBright(
                                     '--force'
                                 )} flag`
