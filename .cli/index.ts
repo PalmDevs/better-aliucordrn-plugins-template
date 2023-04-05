@@ -52,7 +52,6 @@ logger.debug(
 
 // Load plugins
 
-const packageNamePlugins = new Map<string, string[]>();
 const plugins = await Promise.all(
     readdirSync('./plugins')
         .filter(plugin => lstatSync(`./plugins/${plugin}`).isDirectory())
@@ -253,21 +252,6 @@ program
 
         logger.debug('No options or commands passed, going to help page');
         if (!removePmJunk && !removeSemrelPackages) handleHelp();
-
-        // Tell users for duplicate package names plugins, this comes after because it needs to be noticed
-        Array.from(packageNamePlugins)
-            .filter(([_, plugins]) => plugins.length > 1)
-            .forEach(([packageName, plugins]) => {
-                logger.newLine('error');
-                logger.error(
-                    `The package name ${chalk.yellow(
-                        packageName
-                    )} is used by multiple plugins. One or more of following plugins need to be modified:\n` +
-                        plugins
-                            .map(plugin => chalk.yellow(` - ${plugin}`))
-                            .join('\n')
-                );
-            });
     });
 
 program
