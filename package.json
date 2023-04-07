@@ -22,9 +22,9 @@
     "cli:debug": "CLI_DEBUG=1 npm run cli --",
     "help": "npm run cli -- help",
     "watch": "npm run cli -- build --watch",
-    "update-lf:npm": "npm install --package-lock-only",
-    "update-lf:yarn": "yarn install --mode update-lockfile",
-    "update-lf:pnpm": "pnpm install --lockfile-only",
+    "update-lf:npm": "npm install --ignore-scripts --package-lock-only",
+    "update-lf:yarn": "yarn install --ignore-scripts --mode update-lockfile",
+    "update-lf:pnpm": "pnpm install --ignore-scripts --lockfile-only",
     "ci-install:npm": "npm ci --prefer-offline --no-audit",
     "ci-install:yarn": "yarn install --immutable --immutable-cache",
     "ci-install:pnpm": "pnpm install --frozen-lockfile"
@@ -51,8 +51,7 @@
     "lint-staged": "^13.2.0",
     "prettier": "^2.8.7",
     "rollup": "^3.20.2",
-    "semantic-release": "^21.0.1",
-    "semantic-release-aliucordrn-plugin": "^1.0.2",
+    "semantic-release-aliucordrn-plugin": "^1.0.3",
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
     "typescript": "^5.0.3"

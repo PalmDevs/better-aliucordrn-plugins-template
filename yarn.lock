@@ -3474,7 +3474,7 @@ npm-audit-report@^4.0.0:
 
 npm-bundled@^1.1.1:
   version "1.1.2"
-  resolved "https://registry.npmjs.org/npm-bundled/-/npm-bundled-1.1.2.tgz"
+  resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.1.2.tgz#944c78789bd739035b70baa2ca5cc32b8d860bc1"
   integrity sha512-x5DHup0SuyQcmL3s7Rx/YQ8sbw/Hzg0rj48eN0dV7hf5cmQq5PXIeioroH3raV1QC1yh3uTYuMThvEQF3iKgGQ==
   dependencies:
     npm-normalize-package-bin "^1.0.1"
@@ -3514,7 +3514,7 @@ npm-normalize-package-bin@^1.0.1:
 
 npm-normalize-package-bin@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.npmjs.org/npm-normalize-package-bin/-/npm-normalize-package-bin-2.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/npm-normalize-package-bin/-/npm-normalize-package-bin-2.0.0.tgz#9447a1adaaf89d8ad0abe24c6c84ad614a675fff"
   integrity sha512-awzfKUO7v0FscrSpRoogyNm0sajikhBWpU0QMrW09AMi9n1PoKU6WaIqUzuJSQnpciZZmJ/jMZ2Egfmb/9LiWQ==
 
 npm-normalize-package-bin@^3.0.0:
@@ -4562,10 +4562,10 @@ safe-buffer@~5.2.0:
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-semantic-release-aliucordrn-plugin@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/semantic-release-aliucordrn-plugin/-/semantic-release-aliucordrn-plugin-1.0.2.tgz"
-  integrity sha512-gA+ro8bILR7hQlGXJV6ahejlpmm9X7vIiXC3dJtyF1WaM7ivzcAnJh2a/d0P8iW76Tq4cpbnxd+JAyE8hq2L3g==
+semantic-release-aliucordrn-plugin@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/semantic-release-aliucordrn-plugin/-/semantic-release-aliucordrn-plugin-1.0.3.tgz"
+  integrity sha512-ic2lr7sekqDafZDAtF8pLGf8vN0+4wGSLA1RtApUJoKeCsUIS24OnkbY6ceBHgSZjgrbYm2kWZvToQKaFZX0cQ==
   dependencies:
     semantic-release "^21.0.1"
 
